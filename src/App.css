@@ -4,3 +4,16 @@
     margin: 0;
     padding: 0;
 }
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    background: rgba(193, 193, 255, 0.062);;
+}
+
+.feed {
+    width: 100%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
