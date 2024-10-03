@@ -1,0 +1,12 @@
+.avatar-container {
+    color: #fff;
+}
+
+.circle-background {
+    background: lightgreen;
+    border-radius: 50%;
+    padding: 0.6rem;
+    color: rgb(0, 0, 71);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
