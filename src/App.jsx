@@ -2,6 +2,7 @@ import './App.css'
 import Header from './components/layout/Header'
 import Navigation from './components/layout/Navigation'
 import PostForm from './components/post/PostForm'
+import Post from './components/post/Post'
 
 const App = () => {
 
@@ -12,6 +13,7 @@ const App = () => {
         <Navigation />
         <div className='feed'>
           <PostForm />
+          <Post />
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@
 .main-content {
     display: flex;
     flex-direction: row;
-    background: rgba(193, 193, 255, 0.062);;
+    background: rgba(193, 193, 255, 0.169);;
 }
 
 .feed {
