@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Avatar from "../user/Avatar";
 import CommentForm from "./CommentForm";
+import Comment from "./Comment";
 import { useUser } from "../../contexts/UserContext";
 import { usePosts } from "../../contexts/PostContext";
 import '../../styling/post.css'
@@ -34,6 +35,7 @@ const Post = () => {
                             <p>{post.content}</p>
                         </div>
                         <span className="separator"/>
+                        <Comment postId={post.id}/>
                         <CommentForm />
                     </div>
                 );
