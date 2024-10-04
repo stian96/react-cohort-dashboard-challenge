@@ -24,28 +24,29 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const createPost = async (title: string, content: string, contactId: number) => {
-        try {
-          const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post`, {
+    try {
+        const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ title, content, contactId }),
-          });
-      
-          if (!response.ok) {
-            throw new Error(`Response not ok, status: ${response.status}`);
-          }
-      
-          const newPost = await response.json();
-          setPosts((prevPosts) => [newPost, ...prevPosts]);
-          return newPost; 
-        } 
-        catch (error) {
-          console.error('Feil ved opprettelse av post:', error);
-          throw error; 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Respons ikke ok, status: ${response.status}`);
         }
-    }
+
+        const newPost = await response.json();
+        setPosts((prevPosts) => [newPost, ...prevPosts]);
+
+        return newPost;
+    } 
+    catch (error) {
+            console.error('Feil ved opprettelse av post:', error);
+            throw error;
+        }
+    }   
 
     return (
         <PostContext.Provider value={{ posts, setPosts, createPost}}>

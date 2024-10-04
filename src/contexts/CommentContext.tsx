@@ -13,7 +13,6 @@ const CommentContext = createContext<CommentContextType | undefined>(undefined);
 export const CommentProvider: React.FC<{ children: React.ReactNode}> = ({ children}) => {
     const [comments, setComments] = useState<PostComment[]>([]);
 
-    // TODO: Fix this later.
     const createComment = async (content: string, postId: number) => {
         const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post/${postId}/comment`, {
             method: 'POST',

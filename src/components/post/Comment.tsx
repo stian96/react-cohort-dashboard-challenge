@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "../user/Avatar";
 import { PostComment, UserType } from "../../types/types";
+import CommentForm from "./CommentForm";
+import { useUser } from "../../contexts/UserContext";
+
 import "../../styling/comment.css";
 
 interface CommentProps {
@@ -9,6 +12,7 @@ interface CommentProps {
 
 // TODO: Move state into context and api calls into context.
 const Comment = ({ postId }: CommentProps) => {
+    const { user } = useUser();
     const [postComments, setPostComments] = useState<PostComment[]>([]);
     const [commentUsers, setCommentUsers] = useState<UserType[]>([]);
     const [showAllComments, setShowAllComments] = useState<boolean>(false);
@@ -44,17 +48,48 @@ const Comment = ({ postId }: CommentProps) => {
         return `${firstName} ${lastName}`;
     }
     const getCommentUserColour = (commentUsers: UserType[], comment: PostComment): string => {
-        return commentUsers.find((user: UserType) => user.id === comment.contactId)?.favouriteColour || '#000000';
+        return commentUsers.find((user: UserType) => user.id === comment.contactId)?.favouriteColour || 'lightgreen';
+    }
+
+    // TODO: Move this logic to another place.
+    const handleAddComment = async (postId: number, comment: string) => {
+        try {
+            const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post/${postId}/comment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: comment,
+                    contactId: user!.id,
+                    postId: postId,
+                }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to add comment');
+            }
+    
+            const newComment = await response.json();
+            setPostComments([...postComments, newComment]);
+            await fetchCommentUsers(newComment.contactId);
+        } 
+        catch (error) {
+            console.error('Error adding comment:', error);
+        }
     }
 
 
     const visibleComments = showAllComments ? postComments : postComments.slice(0, 3);
 
     return (
-        <div className="comment-container">
-            <button className="see-previous-comments-button" onClick={() => setShowAllComments(!showAllComments)}>
-                See previous commments
-            </button>
+        <>
+            <div className="comment-container">
+            { postComments.length > 3 && (
+                <button className="see-previous-comments-button" onClick={() => setShowAllComments(!showAllComments)}>
+                    See previous commments
+                </button>
+            )}
             { visibleComments.map((comment) => (
                 <div key={comment.id} className="comment-item">
                     <Avatar username={getCommentUserName(commentUsers, comment)} backgroundColor={getCommentUserColour(commentUsers, comment)}/>
@@ -64,7 +99,10 @@ const Comment = ({ postId }: CommentProps) => {
                     </div>
                 </div>
             ))}
-        </div>
+            </div>
+            <CommentForm postId={postId} onAddComment={handleAddComment} />
+        </>
+        
     )
 }
 

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Avatar from "../user/Avatar";
-import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import { useUser } from "../../contexts/UserContext";
 import { usePosts } from "../../contexts/PostContext";
+
 import '../../styling/post.css'
 
 const Post = () => {
@@ -16,7 +16,8 @@ const Post = () => {
                 fetchPostUsers(post.contactId);
             }
         })
-    }, [posts, fetchPostUsers, postUsers])
+    }, [posts, fetchPostUsers, postUsers]);
+
 
     return (
         <>
@@ -35,8 +36,7 @@ const Post = () => {
                             <p>{post.content}</p>
                         </div>
                         <span className="separator"/>
-                        <Comment postId={post.id}/>
-                        <CommentForm />
+                        <Comment postId={post.id} />
                     </div>
                 );
             })}

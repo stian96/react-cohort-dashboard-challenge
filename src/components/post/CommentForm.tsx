@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import Avatar from "../user/Avatar";
-import '../../styling/commentForm.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import '../../styling/commentForm.css'
 
-const CommentForm = () => {
+interface CommentFormProps {
+    postId: number;
+    onAddComment: (postId: number, comment: string) => void;
+}
+
+const CommentForm = ({ postId, onAddComment }: CommentFormProps) => {
     const [commentContent, setCommentContent] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: Implement logic to send comment.
-        console.log("Kommentar sendt:", commentContent);
+        if (commentContent.trim()) {
+            onAddComment(postId, commentContent);
+        }
         setCommentContent("");
     };
 
