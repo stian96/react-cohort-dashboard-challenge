@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import "../../styling/postForm.css";
 import Avatar from "../user/Avatar";
+import { useUser } from "../../contexts/UserContext";
+import { usePosts } from "../../contexts/PostContext";
 
 const PostForm = () => {
-    const [postContent, setPostContent] = useState("");
+    const { user } = useUser();
+    const { createPost } = usePosts();
+    const [content, setContent] = useState("");
+
+    if (!user) return <div>Loading user...</div>;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: Implement logic to send post.
-        console.log("Innlegg sendt:", postContent);
-        setPostContent("");
+        const newPost = createPost("Voveo absorbeo appono theologus suspendo alioqui.", content, user?.id);
+        console.log(newPost);
+        setContent("");
+        
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContent(e.target.value);
     };
 
     return (
@@ -17,8 +28,8 @@ const PostForm = () => {
             <Avatar />
             <textarea
                 className="post-input"
-                value={postContent}
-                onChange={(e) => setPostContent(e.target.value)}
+                value={content}
+                onChange={handleChange}
                 placeholder="What's on your mind?"
                 rows={3}
                 required

@@ -6,6 +6,7 @@ interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
   postUsers: UserType[];
   fetchPostUsers: (id: number) => void;
+  setPostUsers: React.Dispatch<React.SetStateAction<UserType[]>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -26,18 +27,22 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const fetchPostUsers = async (id: number) => {
-    const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/contact/${id}`);
-    if (response.ok) {
-      const data = await response.json() as UserType;
-      const userExists = postUsers.some((user) => user.id === data.id);
-      if (!userExists) {
-        setPostUsers((prevUsers) => [...prevUsers, data]);
+
+    // Got an error when trying to fetch user with id 42, so added a check to prevent it.
+    if (id !== 42) {
+      const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/contact/${id}`);
+      if (response.ok) {
+        const data = await response.json() as UserType;
+        const userExists = postUsers.some((user) => user.id === data.id);
+        if (!userExists) {
+          setPostUsers((prevUsers) => [...prevUsers, data]);
+        }
       }
     }
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, postUsers, fetchPostUsers }}>
+    <UserContext.Provider value={{ user, setUser, postUsers, setPostUsers, fetchPostUsers }}>
       {children}
     </UserContext.Provider>
   )

@@ -4,6 +4,7 @@ import { PostType } from "../types/types";
 interface PostContextType {
     posts: PostType[];
     setPosts: React.Dispatch<React.SetStateAction<PostType[]>>;
+    createPost: (title: string, content: string, contactId: number) => void;
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
@@ -22,8 +23,32 @@ export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children
         fetchPosts();
     }, []);
 
+    const createPost = async (title: string, content: string, contactId: number) => {
+        try {
+          const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content, contactId }),
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Response not ok, status: ${response.status}`);
+          }
+      
+          const newPost = await response.json();
+          setPosts((prevPosts) => [newPost, ...prevPosts]);
+          return newPost; 
+        } 
+        catch (error) {
+          console.error('Feil ved opprettelse av post:', error);
+          throw error; 
+        }
+    }
+
     return (
-        <PostContext.Provider value={{ posts, setPosts}}>
+        <PostContext.Provider value={{ posts, setPosts, createPost}}>
             { children}
         </PostContext.Provider>
     );

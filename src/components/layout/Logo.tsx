@@ -7,7 +7,6 @@ const Logo = () => {
             viewBox="0 0 356 56"
             width={300}
             height={50}
-            color="#fff"
         >
             <path
                 fill="#ffff"
