@@ -1,19 +1,35 @@
 import React from "react"
 import '../../styling/avatar.css'
+import { useUser } from "../../contexts/UserContext";
 
-// TODO: Send username through props.
-const Avatar = () => {
-    const username = "Stian Rusvik";
+interface AvatarProps {
+    username?: string;
+    backgroundColor?: string;
+}
+
+const Avatar = ({ username, backgroundColor }: AvatarProps) => {
+    const { user } = useUser();
 
     const getInitials = (str: string) => {
         const [firstName, lastName] = str.split(' ');
         return firstName.charAt(0).toLocaleUpperCase() + lastName.charAt(0).toLocaleUpperCase();
     }
 
+    if (!user) return <div>Loading user...</div>
+
+    const showUserInitials = () => {
+        if (username) {
+            return getInitials(username);
+        } 
+        else {
+            return getInitials(user.firstName + " " + user.lastName);
+        }
+    }
+
     return (
         <div className="avatar-container">
-            <div className="circle-background">
-                { getInitials(username)}
+            <div className="circle-background" style={{ backgroundColor: backgroundColor ? backgroundColor : user.favouriteColour }}>
+                { showUserInitials()}
             </div>
         </div>
     )
