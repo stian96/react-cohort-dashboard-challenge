@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from "../user/Avatar";
 import '../../styling/post.css'
+import CommentForm from "./CommentForm";
 
 // TODO: Send values dynamic via props.
 const Post = () => {
@@ -20,7 +21,7 @@ const Post = () => {
                 <p>ldkløfsdkølfdsløfdkaløkølfdkløklkfaslølfkdsløfdaløkl</p>
             </div>
             <span className="separator"/>
-            {/* TODO: Add CommentSection and Comment */}
+            <CommentForm />
         </div>
     )
 }

@@ -21,6 +21,7 @@ const PostForm = () => {
                 onChange={(e) => setPostContent(e.target.value)}
                 placeholder="What's on your mind?"
                 rows={3}
+                required
             />
             <button type="submit" className="post-button">
                 Post
