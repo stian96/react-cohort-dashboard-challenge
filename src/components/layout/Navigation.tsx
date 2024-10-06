@@ -35,19 +35,16 @@ const Navigation = () => {
         <nav className="navbar">
             <ul className="nav-list">
                 { navItems.map((item) => (
-                    <li 
-                        key={item.id} 
-                        className={`nav-item ${activeItem === item.id ? 'active':''}`}
+                    <Link 
+                        key={item.id}
+                        to={item.link} 
+                        className={`nav-link nav-item ${activeItem === item.id ? 'active':''}`}
                         onClick={() => setActiveItem(item.id)}
                     >
-                        <Link 
-                            to={item.link} 
-                            className="nav-link"
-                            onClick={() => setActiveItem(item.id)}
-                        >
+                        <li >
                             <span>{item.logo}</span> <p>{item.text}</p>
-                        </Link>
-                    </li>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </nav>

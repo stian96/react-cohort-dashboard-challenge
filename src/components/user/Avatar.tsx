@@ -5,9 +5,10 @@ import { useUser } from "../../contexts/UserContext";
 interface AvatarProps {
     username?: string;
     backgroundColor?: string;
+    customClassname?: string;
 }
 
-const Avatar = ({ username, backgroundColor }: AvatarProps) => {
+const Avatar = ({ username, backgroundColor, customClassname }: AvatarProps) => {
     const { user } = useUser();
 
     const getInitials = (str: string) => {
@@ -28,7 +29,10 @@ const Avatar = ({ username, backgroundColor }: AvatarProps) => {
 
     return (
         <div className="avatar-container">
-            <div className="circle-background" style={{ backgroundColor: backgroundColor ? backgroundColor : user.favouriteColour }}>
+            <div 
+                className={`circle-background ${customClassname ? customClassname : ''}`} 
+                style={{ backgroundColor: backgroundColor ? backgroundColor : user.favouriteColour }}
+            >
                 { showUserInitials()}
             </div>
         </div>

@@ -9,6 +9,7 @@ import { CommentProvider } from './contexts/CommentContext';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SinglePost from './components/post/SinglePost';
 import './App.css'
+import ProfilePage from './components/user/ProfilePage';
 
 const App = () => {
 
@@ -30,6 +31,7 @@ const App = () => {
                       </>
                     } />
                     <Route path="/post/:id" element={<SinglePost />} />
+                    <Route path='/profile' element={<ProfilePage />} />
                   </Routes>
                 </div>
               </div>
