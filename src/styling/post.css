@@ -46,9 +46,15 @@
     margin: 1.3rem 0;
 }
 
-.post-content p {
+.post-content p, .post-subtitle {
     line-height: 1.6;
     font-size: 0.8rem;
     font-weight: bold;
     color: #3c3c55;
+    text-decoration: none;
 }
+
+.post-subtitle:hover {
+    text-decoration: underline;
+}
+

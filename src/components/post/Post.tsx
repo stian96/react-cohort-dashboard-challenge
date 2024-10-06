@@ -3,6 +3,7 @@ import Avatar from "../user/Avatar";
 import Comment from "./Comment";
 import { useUser } from "../../contexts/UserContext";
 import { usePosts } from "../../contexts/PostContext";
+import { Link } from "react-router-dom";
 
 import '../../styling/post.css'
 
@@ -29,7 +30,7 @@ const Post = () => {
                             <Avatar username={`${postUser?.firstName} ${postUser?.lastName}`} backgroundColor={postUser?.favouriteColour} />
                             <div className="post-author-info">
                                 <h3>{postUser ? `${postUser.firstName} ${postUser.lastName}` : 'Uknown User'}</h3>
-                                <p className="post-subtitle">{post.title}</p>
+                                <Link to={`/post/${post.id}`} className="post-subtitle">{post.title}</Link>
                             </div>
                         </div>
                         <div className="post-content">

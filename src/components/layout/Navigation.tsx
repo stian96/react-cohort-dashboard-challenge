@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import '../../styling/navigation.css'
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
     const [activeItem, setActiveItem] = useState<number>(1);
@@ -12,6 +13,7 @@ const Navigation = () => {
                     <path d="M0.5 36V12L16.6 0L32.5 12V36H20.8V21.75H12.15V36H0.5Z" fill="#64648C" />
                 </svg>
             ),
+            link: '/',
             text: 'Home'
         },
         {
@@ -24,6 +26,7 @@ const Navigation = () => {
                     />
                 </svg>
             ),
+            link: '/profile',
             text: 'Profile'
         }
     ];
@@ -37,7 +40,13 @@ const Navigation = () => {
                         className={`nav-item ${activeItem === item.id ? 'active':''}`}
                         onClick={() => setActiveItem(item.id)}
                     >
-                        <span>{item.logo}</span> <p>{item.text}</p>
+                        <Link 
+                            to={item.link} 
+                            className="nav-link"
+                            onClick={() => setActiveItem(item.id)}
+                        >
+                            <span>{item.logo}</span> <p>{item.text}</p>
+                        </Link>
                     </li>
                 ))}
             </ul>

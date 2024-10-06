@@ -10,7 +10,6 @@ interface CommentProps {
     postId: number;
 }
 
-// TODO: Move state into context and api calls into context.
 const Comment = ({ postId }: CommentProps) => {
     const { user } = useUser();
     const [postComments, setPostComments] = useState<PostComment[]>([]);
@@ -51,7 +50,6 @@ const Comment = ({ postId }: CommentProps) => {
         return commentUsers.find((user: UserType) => user.id === comment.contactId)?.favouriteColour || 'lightgreen';
     }
 
-    // TODO: Move this logic to another place.
     const handleAddComment = async (postId: number, comment: string) => {
         try {
             const response = await fetch(`https://boolean-uk-api-server.fly.dev/stian96/post/${postId}/comment`, {
@@ -87,7 +85,7 @@ const Comment = ({ postId }: CommentProps) => {
             <div className="comment-container">
             { postComments.length > 3 && (
                 <button className="see-previous-comments-button" onClick={() => setShowAllComments(!showAllComments)}>
-                    See previous commments
+                    { !showAllComments ? 'See previous comments' : 'Hide previous comments'}
                 </button>
             )}
             { visibleComments.map((comment) => (
